@@ -1,0 +1,33 @@
+Autowiring by XML configurations
+- Autowiring by Type
+- Autowiring by Name
+- Autowiring by Constructor
+- Default Autowiring
+
+Autowiring by annnotations
+- @Autowired purely working by Type
+- @Qualifier
+  - XML configuration
+  - Java class 
+- @Resource 
+  - JSR-250 based annotations (from 2006) - a annotation allowing dependency injection)
+  - working by Type by default
+  - @Resource(name="squirrel") working by Id to avoid ambiguity of types
+  - cannot used in constructor
+- @PostConstruct and @PreDestroy
+  - JSR-250 based annotation - init and destroy methods
+  - xml-based (beans.xml) 
+  - @PreDestroy only works for singleton
+  - @PostConstruct works for singleton and prototype
+- @Inject & @Named(value="name") 
+  - JSR-330 based annotation (from 2009)
+- context:component-scan
+  
+Three ways of Configurations  
+1. Java-based
+  - config class
+  - @Configuration & @ComponentScan
+2. annotation-based
+  - @Componenet, @Service, @Repository, @Controller
+3. xml-based
+  - XML
