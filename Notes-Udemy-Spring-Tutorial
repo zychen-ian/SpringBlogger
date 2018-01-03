@@ -91,3 +91,17 @@ Display data on View
         - Reference: https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html
         - Standard Syntax: <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         - Maven pom.xml search javax.servlet jstl
+* configure a JNDI data source
+  - JNDI - Java Naming and Directory Interface (JNDI) 
+        * a Java API for a directory service that allows Java software clients to discover and look up data and objects via a name. 
+  - search Tomcat Mysql data source JDNI https://tomcat.apache.org/tomcat-7.0-doc/jndi-datasource-examples-howto.html#MySQL_DBCP_Example
+  - context.xml configuration
+  <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+	maxActive="100" maxIdle="30" maxWait="10000"
+	username="javauser" password="javadude" driverClassName="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://localhost:3306/javatest"/>
+  - web.xml configuration
+  - xxx.jsp addons
+  	<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  - 
