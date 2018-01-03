@@ -31,3 +31,63 @@ Three ways of Configurations
   - @Componenet, @Service, @Repository, @Controller
 3. xml-based
   - XML
+
+Working with Database
+* working with MySQL
+  - update password
+    - SET PASSWORD FOR 'root'@'localhost' = PASSWORD('MyNewPass');
+    - Reference: 
+      - https://dev.mysql.com/doc/refman/5.7/en/resetting-permissions.html
+      - https://blog.dotkam.com/2007/04/10/mysql-reset-lost-root-password/    
+* saving database information in a property file
+* DBCP - Database Connection Pool 
+  - Reference: https://en.wikipedia.org/wiki/Connection_pool
+  - a cache of database connetions maintained so that the connections can be reused when future requests to the database are required.
+  - so developer don't have to worry about openning and closing the connections. Just use.
+  - In connection pooling, after a connection is created, it is placed in the pool and it is used again so that a new connection does not have to be established. 
+  - if all the connections are being used, a new connection is made and is added to the pool. 
+  - Web-based and enterprise applications use an application server to handle connection pooling.
+  
+  <!-- connection pool configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+	</bean>
+* JDBC Template
+  - This is a tutorial of Spring JDBC Framework. When we need to interface with databases, 
+    the Spring JDBC framework provides solutions to all the low-level details, 
+    like open/close a connection, prepare and execute SQL statements, process exceptions and handle transactions. 
+    Thus, the only thing a developer must do is just define connection parameters and specify the SQL statement to be executed.
+* Named Parameter JDBC Template (for placeholders)
+  - prevent SQL injection
+
+Q&A
+* if missing tx in Namespace in beans.xml, how do you deal with it?
+  - In beans.xml, add attributes to tag <beans>
+    - xmlns:tx="http://www.springframework.org/schema/tx"
+    - xsi:schemaLocation="http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+
+Spring MVC
+* Set dynamic web module version to 2.5
+  * 2.5 is compatible with Tomcat 6.0 which is popular in some free servers
+  * we can have a web XML
+* 3.* is more annotation-driven
+
+Display data on View
+* It's bad to have Java embedded in view or JSP; instead, we use expression language (EL) 
+* Controller
+  * HttpSession (session scope)
+  * ModelAndView (request scope)
+* View
+  * embedded Java (NOT recommended)
+    * JSP - request & session
+  * expression language (EL)
+    * Disadvantages - model.put("name", "<b>River<b>") where HTML tags take effects.
+      * JSTL (stuff in Servlet JSP course) JSP Standard Tag Library which can safely output attributes and stuffs in JSP
+      * Installation: 
+        - Reference: https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/c/tld-summary.html
+        - Standard Syntax: <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        - Maven pom.xml search javax.servlet jstl
